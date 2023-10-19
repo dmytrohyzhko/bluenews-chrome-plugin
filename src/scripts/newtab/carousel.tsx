@@ -25,7 +25,7 @@ export function CarouselWithContent(props) {
                   >
                     {value.title}
                   </Typography>
-                  <div className="flex justify-center gap-2">
+                  <div className="flex justify-center gap-2 mt-2">
                     <Button size="lg" color="white">
                       View
                     </Button>
