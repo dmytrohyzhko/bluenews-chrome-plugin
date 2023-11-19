@@ -55,8 +55,18 @@ export default withMT({
               800: '#0A0A0A',
               900: '#050505'
             }
-          }
-        }
+          },
+        },
+        screens: {
+          "2xs": "400px",
+          xs: "540px",
+          sm: "640px",
+          md: "768px",
+          '2md': "870px",
+          lg: "1024px",
+          xl: "1280px",
+          "2xl": "1536px",
+        },
       },
     plugins: []
 });

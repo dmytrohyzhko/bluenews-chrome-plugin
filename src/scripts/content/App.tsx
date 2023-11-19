@@ -17,7 +17,7 @@ const App = () => {
 
     return (
         <>
-            {isOpen && (
+            {/* {isOpen && (
                 <div className="fixed bottom-0 right-0 p-4">
                     <div className="inline-flex items-center justify-center h-16 rounded-full">
                         <div className="inline-flex items-center justify-end p-2 rounded-full bg-gradient-to-r from-fuchsia-700 to-blue-400">
@@ -38,7 +38,7 @@ const App = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </>
     )
 }

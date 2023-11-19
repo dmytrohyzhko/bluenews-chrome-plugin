@@ -9,11 +9,11 @@ interface Manifest {
     action: {
         default_popup: string
     }
-    options_ui: {
+    options_ui?: {
         page: string
         open_in_tab: boolean
     }
-    background: {
+    background?: {
         service_worker: string
         type: string
     }
@@ -58,14 +58,14 @@ const createBaseManifest = async (): Promise<Manifest> => {
             action: {
                 default_popup: './src/scripts/popup/popup.html'
             },
-            options_ui: {
-                page: './src/scripts/options/options.html',
-                open_in_tab: true
-            },
-            background: {
-                service_worker: 'js/service-worker.js',
-                type: 'module'
-            },
+            // options_ui: {
+            //     page: './src/scripts/options/options.html',
+            //     open_in_tab: true
+            // },
+            // background: {
+            //     service_worker: 'js/service-worker.js',
+            //     type: 'module'
+            // },
             icons: {
                 16: './assets/icon-750.png',
                 48: './assets/icon-750.png',
@@ -74,21 +74,23 @@ const createBaseManifest = async (): Promise<Manifest> => {
             chrome_url_overrides: {
                 newtab: './src/scripts/newtab/newtab.html'
             },
-            permissions: [],
+            permissions: [
+                'storage',
+            ],
             content_scripts: [
                 {
                     matches: ['<all_urls>'],
                     js: ['./js/content.js']
                 }
             ],
-            commands: {
-                refresh_extension: {
-                    suggested_key: {
-                        default: 'Ctrl+Space'
-                    },
-                    description: 'Refresh Extension' // https://developer.chrome.com/docs/extensions/reference/commands/
-                }
-            }
+            // commands: {
+            //     refresh_extension: {
+            //         suggested_key: {
+            //             default: 'Ctrl+Space'
+            //         },
+            //         description: 'Refresh Extension' // https://developer.chrome.com/docs/extensions/reference/commands/
+            //     }
+            // }
         }
     } catch (error) {
         console.error('Error reading package.json:', error)
@@ -126,11 +128,51 @@ const readJsFiles = async (dir: string): Promise<string[]> => {
     }
 }
 
+const readAppAssetFiles = async (dir: string): Promise<string[]> => {
+    try {
+        const files = await fs.readdir(dir)
+        return files
+            .filter((file: string) => path.extname(file) === '.png' || path.extname(file) === '.svg')
+            .map((file: string) => path.join(dir, file))
+    } catch (error) {
+        console.error(`Error reading PNG files from ${dir}:`, error)
+        throw error
+    }
+}
+
+const readBackgroundAssetFiles = async (dir: string): Promise<string[]> => {
+    try {
+        const files = await fs.readdir(dir)
+        return files
+            .filter((file: string) => path.extname(file) === '.jpg')
+            .map((file: string) => path.join(dir, file))
+    } catch (error) {
+        console.error(`Error reading JPEG files from ${dir}:`, error)
+        throw error
+    }
+}
+
+const readFontAssetFiles = async (dir: string): Promise<string[]> => {
+    try {
+        const files = await fs.readdir(dir)
+        return files
+            .filter((file: string) => path.extname(file) === '.ttf')
+            .map((file: string) => path.join(dir, file))
+    } catch (error) {
+        console.error(`Error reading JPEG files from ${dir}:`, error)
+        throw error
+    }
+}
+``
 export const writeManifest = async (): Promise<void> => {
     try {
-        const dir = 'dist/js'
-        const files = await readJsFiles(dir)
-
+        const jsFiles = await readJsFiles('dist/js')
+        const appAsset1Files = await readAppAssetFiles('dist/assets/app');
+        const appAsset2Files = await readAppAssetFiles('dist/assets/app/weather_icon');
+        const appAsset3Files = await readFontAssetFiles('dist/assets/app/fonts');
+        const appBackFiles = await readBackgroundAssetFiles('dist/assets/backgrounds');
+        const files = [ ...jsFiles, ...appAsset1Files, ...appAsset2Files, ...appAsset3Files, ...appBackFiles ];
+        
         const manifest = await getManifest(files)
 
         fs.writeFileSync('dist/manifest.json', JSON.stringify(manifest, null, 2))
