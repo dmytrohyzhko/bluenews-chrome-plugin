@@ -1,8 +1,4 @@
-# dougwithseismic/react-tailwind-chrome-extension-template 🔥
-
-So, you want to build modern web extensions with React & Tailwind? Step on in. This is the starting point for all my browser extensions, including Promptheus, which lets over 28,000 weekly users talk to ChatGPT with their voice.
-
-Why do we need another extension boilerplate? Because v3 manifest! At time of writing, nothing out there comes as simple as this to working - If I can help just one person launch their extension then this project is a complete success in my eyes.
+# BlueNEWS Chrome Extension
 
 ## 1. Setup
 
@@ -104,9 +100,3 @@ Heading to `chrome://extensions` and hitting the reload button every time I want
 If you want to edit / disable this (and it could be a good idea to do so for production ships) then comment out the `commands` section on `src/manifest.ts`, or remove the `Chrome.commands` mentions from `src/scripts/service-worker/service-worker.ts` More here. [https://developer.chrome.com/docs/extensions/reference/commands/](https://developer.chrome.com/docs/extensions/reference/commands/)
 
 Using `npm run build` with the watcher, and the Quick Reload Shortcut, you can get pretty close to a seamless hot-reloading experience, though its not perfect. Any ideas to make this more fluid are welcome!
-
-## Need help?
-
-Follow me on [twitter.com/dougiesilkstone](https://twitter.com/dougiesilkstone) and drop me a message, and please do submit a PR to help improve! I'll be running a week long hackathon to build and launch an extension project from start to finish, so if you're interested in joining, follow for more info.
-
-I'm here to help. It's what I enjoy the most (aside from shipping products, obviously). Reach out, always.
